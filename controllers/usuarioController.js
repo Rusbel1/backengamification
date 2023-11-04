@@ -109,7 +109,7 @@ const usuariosGetByIdAcc = async(req = request, res = response)=>{
             //Encriptar contraseña
             await Usuario.findByIdAndUpdate(id, data);
             console.log(data);
-        res.json({
+        return res.json({
             msg: 'Ha sido cambiado con exito',
         })
 

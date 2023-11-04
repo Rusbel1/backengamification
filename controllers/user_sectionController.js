@@ -42,7 +42,7 @@ const User_sectionPost = async(req = request, res = response)=>{
 const User_sectionGetByUsuario = async(req = request, res = response)=>{
     try {
         const {idUsuario} = req.params
-        const user_sectionByid = await User_section.findOne({id_usuario:idUsuario}).populate('id_usuario').populate('id_section');
+        const user_sectionByid = await User_section.find({id_usuario:idUsuario}).populate('id_usuario').populate('id_section');
         if(!user_sectionByid){
             return res.status(400).json({
                 msg:`El id de usuario id:${idUsuario} no existe en la db`
@@ -59,7 +59,7 @@ const User_sectionGetByUsuario = async(req = request, res = response)=>{
 const User_sectionGetBySection = async(req = request, res = response)=>{
     try {
         const {idSection} = req.params
-        const section_sectionByid = await User_section.findOne({id_section:idSection}).populate('id_usuario').populate('id_section');
+        const section_sectionByid = await User_section.find({id_section:idSection}).populate('id_usuario').populate('id_section');
         if(!section_sectionByid){
             return res.status(400).json({
                 msg:`El id de usuario id:${idSection} no existe en la db`

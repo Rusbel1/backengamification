@@ -121,5 +121,6 @@ module.exports = {
     user_accGet,
     user_accPut,
     user_accDelete,
-    user_accPost
+    user_accPost,
+    user_accGetById
 }
