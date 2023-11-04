@@ -1,5 +1,5 @@
 const {response, request, json} = require('express');
-const {User_account} = require('../models');
+const {User_account,Usuario} = require('../models');
 const {generarJWT} = require('../helpers/generar-jwt')
 const bcryptjs = require('bcryptjs');
 
@@ -28,13 +28,13 @@ const login = async(req= request, res= response)=>{
             })
         }
 
-
+        const {_id} = await Usuario.findOne({id_account_user: usuario._id}) 
         //Generamos JsonWebToken
-        const token = await generarJWT(usuario._id);
+        const token = await generarJWT(_id);
 
             //Retornamos el usuario con su token
             return res.json({
-                usuario,
+                _id,
                 token
             })
         

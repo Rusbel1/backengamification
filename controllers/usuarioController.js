@@ -98,6 +98,12 @@ const usuariosGetByIdAcc = async(req = request, res = response)=>{
             second_lastname,
             points_user} = req.body
 
+            if(points_user<0){
+                return res.status(400).json({
+                    msg:'Los puntos son menores a 0, verificar'
+                })
+            }
+
             const data ={id_account_user,
                 first_name,
                 second_name,
