@@ -1,6 +1,5 @@
 const{response,request}= require('express');
-const {Usuario} = require('../models')
-const brcryptjs = require('bcryptjs');
+const {Usuario} = require('../models');
 
 
 
@@ -12,7 +11,7 @@ const usuariosPost = async(req = request, res = response)=>{
             second_name,
             first_lastname,
             second_lastname,
-            points_user} = req.body;
+            } = req.body;
 
         const data ={
             id_account_user,
@@ -20,7 +19,6 @@ const usuariosPost = async(req = request, res = response)=>{
             second_name,
             first_lastname,
             second_lastname,
-            points_user
         }
             
         const usuario = new Usuario(data);           
@@ -39,9 +37,42 @@ const usuariosPost = async(req = request, res = response)=>{
 
  const usuariosGet = async(req = request, res = response)=>{
     try {
-        const allAcc= await Usuario.find({});
+        const allUser= await Usuario.find({}).populate('id_account_user');
 
-        return res.json(allAcc)
+        return res.json(allUser)
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(401);
+    }
+}
+const usuariosGetById = async(req = request, res = response)=>{
+    try {
+        const {id} = req.params
+        const user = await Usuario.findById(id).populate('id_account_user');
+        if(!user){
+            return res.json({
+                msg:`No se encuentra el id:${id} en la db`
+            })
+        }
+        return res.json(user)
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(401);
+    }
+}
+
+const usuariosGetByIdAcc = async(req = request, res = response)=>{
+    try {
+        const {idAcc} = req.params
+        const userAccount = await Usuario.findOne({id_account_user:idAcc}).populate('id_account_user');
+        if(!userAccount){
+            return res.json({
+                msg:`No se encuentra el id:${id} en la db`
+            })
+        }
+        return res.json(userAccount)
         
     } catch (error) {
         console.log(error);
@@ -114,7 +145,9 @@ try {
 
 module.exports = {
     usuariosGet,
+    usuariosGetById,
     usuariosPut,
     usuariosDelete,
+    usuariosGetByIdAcc,
     usuariosPost
 }

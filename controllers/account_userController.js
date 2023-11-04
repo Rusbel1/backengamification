@@ -43,6 +43,23 @@ const user_accGet = async(req = request, res = response)=>{
     }
 }
 
+const user_accGetById= async(req = request, res = response)=>{
+    try {
+        const {id} = req.params
+        const acc= await User_account.findById(id);
+        if(!acc){
+            return res.status(400).json({
+                msg:`Usuario con id:${id} no se encuentra en la db`
+            })
+        }
+        return res.json(acc)
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(401);
+    }
+}
+
  const user_accPut = async(req = request, res = response)=>{
     try {
         
