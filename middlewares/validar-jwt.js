@@ -1,13 +1,13 @@
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
 
-const {Usuario} = require('../models'); 
+const {Usuario,User_account} = require('../models'); 
 
 const validarJWT = async(req, res=response, next)=>{
     
     try {
         const token = await req.header('token');
-
+        
         if(!token){
             return res.status(401).json({
                 msg: "No hay token en la peticion"
@@ -23,7 +23,7 @@ const validarJWT = async(req, res=response, next)=>{
             
         const decode = jwt.decode(token)
         
-        const usuarioAuth = await Usuario.findById(decode.uid);
+        const usuarioAuth = await User_account.findById({_id:decode.idUser});
 
         if(!usuarioAuth){
             res.status(401).json({
@@ -33,7 +33,7 @@ const validarJWT = async(req, res=response, next)=>{
 
         req.usuarioAuth = usuarioAuth;
 
-        req.uid = tokenValidado;
+        req.idUser = tokenValidado;
 
         next();   
         

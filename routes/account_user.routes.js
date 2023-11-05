@@ -19,7 +19,7 @@ const errores = [
     validarCampos
 ]
 //Obtener usuario
-router.get('/user_accGet',[header('token').isJWT().notEmpty(),validarJWT,validarCampos],user_accGet)
+router.get('/user_accGet',[header('token').isJWT(),validarJWT,validarCampos],user_accGet)
 
 //account by id
 router.get('/user_accGetById/:id',[
