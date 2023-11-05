@@ -28,7 +28,7 @@ router.get('/User_sectionGetByUsuario/:idUsuario',[param('idUsuario','No es un I
 router.get('/User_sectionGetBySection/:idSection',[param('idSection','No es un ID valido de MongoDB').isMongoId().notEmpty(),
                                     header('token').isJWT(),validarJWT,validarCampos],User_sectionGetBySection)
 
-//account by id
+//account by id tabla
 router.get('/User_sectionGetById/:id',[
     param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
     header('token').isJWT(),
@@ -38,7 +38,7 @@ router.get('/User_sectionGetById/:id',[
 //Agregar Usuario
 router.post('/User_sectionPost',errores,User_sectionPost);
 
-//Borrar usuario por ID
+//Borrar usuario por ID de la tabla
 router.delete('/User_sectionDelete/:id',[
     param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
     header('token').isJWT(),
