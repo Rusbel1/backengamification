@@ -1,6 +1,6 @@
 const{ Router }= require('express');
 
-const {check} = require('express-validator');
+const {check,body,param,header} = require('express-validator');
 const { user_accGet,
     user_accPut,
     user_accDelete,
@@ -12,19 +12,18 @@ const {validarCampos} = require('../middlewares/validar-campos');
 const router = Router();
 
 const errores = [
-    check('mail','El correo no es valido').isEmail(),
-    check('password','El nombre1 es obligatorio').not().isEmpty(),
-    check('password','Tiene que ser mas de 6 letras').isLength({min: 6}),
+    body('mail','El correo no es valido').isEmail().notEmpty(),
+    body('password','El nombre1 es obligatorio').notEmpty(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
 ]
 //Obtener usuario
-router.get('/user_accGet',[header('token').isJWT(),validarJWT,validarCampos],user_accGet)
+router.get('/user_accGet',[header('token').isJWT().notEmpty(),validarJWT,validarCampos],user_accGet)
 
 //account by id
 router.get('/user_accGetById/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
+    param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -34,7 +33,7 @@ router.post('/user_accPost',errores,user_accPost);
 
 //Borrar usuario por ID
 router.delete('/user_accDelete/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
+    param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -42,10 +41,8 @@ router.delete('/user_accDelete/:id',[
 
 //Actualizar  usuario por ID
 router.put('/user_accPut/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
-    check('mail','El correo no es valido').isEmail(),
-    check('password','El nombre1 es obligatorio').not().isEmpty(),
-    check('password','Tiene que ser mas de 6 letras').isLength({min: 6}),
+    param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
+    body('mail','El correo no es valido').isEmail(),
     header('token').isJWT(),
     validarJWT,
     validarCampos

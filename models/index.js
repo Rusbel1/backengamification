@@ -1,5 +1,5 @@
 //const Categoria = require('./categoriaModel');
-const Lesson_content = require('./lessonContentModel');
+const Lesson_content = require('./lesson_contentModel');
 const Lesson = require('./lessonModel');
 const Section = require('./sectionModel');
 const User_section = require('./user_sectionModel');

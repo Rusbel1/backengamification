@@ -1,6 +1,6 @@
 const{ Router }= require('express');
 
-const {check, header} = require('express-validator');
+const {check, header,body,param} = require('express-validator');
 const {lessonGet,
     lessonGetById,
     lessonPut,
@@ -13,10 +13,10 @@ const {validarCampos} = require('../middlewares/validar-campos');
 const router = Router();
 
 const errores = [
-    check('type','El title no es valido').not().isEmpty().isLength({min: 2}),
-    check('ovamessage','El slug es obligatorio').not().isEmpty().isLength({min: 2}),
-    check('ovaside','El description es obligatorio').not().isEmpty().isLength({min: 2}),   
-    check('id_section','El description es obligatorio').isMongoId(),        
+    body('type','El title no es valido').notEmpty(),
+    body('ovamessage','El slug es obligatorio').notEmpty(),
+    body('ovaside','El description es obligatorio').notEmpty(),   
+    body('id_section','El description es obligatorio').isMongoId(),        
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -26,14 +26,14 @@ router.get('/lessonGet',[header('token').isJWT(),validarJWT,validarCampos],lesso
 
 //account by id
 router.get('/lessonGetById/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
+    param('id','No es un ID valido de MongoDB').isMongoId(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
 ],lessonGetById)
 
 router.get('/lessonGetByIdSection/:idSection',[
-    check('idSection','No es un ID valido de MongoDB').isMongoId(),
+    param('idSection','No es un ID valido de MongoDB').isMongoId(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -44,7 +44,7 @@ router.post('/lessonPost',errores,lessonPost);
 
 //Borrar usuario por ID
 router.delete('/lessonDelete/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
+    param('id','No es un ID valido de MongoDB').isMongoId(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -52,10 +52,10 @@ router.delete('/lessonDelete/:id',[
 
 //Actualizar  usuario por ID
 router.put('/lessonPut/:id',[
-    check('type','El title no es valido').isLength({min: 2}),
-    check('ovamessage','El slug es obligatorio').isLength({min: 2}),
-    check('ovaside','El description es obligatorio').isLength({min: 2}),   
-    check('id_section','El description es obligatorio').isMongoId(),        
+    body('type','El title no es valido'),
+    body('ovamessage','El slug es obligatorio'),
+    body('ovaside','El description es obligatorio'),   
+    body('id_section','El description es obligatorio').isMongoId(),        
     header('token').isJWT(),
     validarJWT,
     validarCampos

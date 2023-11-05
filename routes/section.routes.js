@@ -1,6 +1,6 @@
 const{ Router }= require('express');
 
-const {check, header} = require('express-validator');
+const {check, header,body,param} = require('express-validator');
 const {sectionGet,
     sectionGetById,
     sectionPut,
@@ -12,10 +12,10 @@ const {validarCampos} = require('../middlewares/validar-campos');
 const router = Router();
 
 const errores = [
-    check('title','El title no es valido').not().isEmpty().isLength({min: 2}),
-    check('slug','El slug es obligatorio').not().isEmpty().isLength({min: 2}),
-    check('description','El description es obligatorio').not().isEmpty().isLength({min: 2}),   
-    check('points_value','El description es obligatorio').isNumeric(),        
+    body('title','El title no es valido').notEmpty(),
+    body('slug','El slug es obligatorio').notEmpty(),
+    body('description','El description es obligatorio').notEmpty(),   
+    body('points_value','El description es obligatorio').isNumeric(),        
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -25,7 +25,7 @@ router.get('/sectionGet',[header('token').isJWT(),validarJWT,validarCampos],sect
 
 //account by id
 router.get('/sectionGetById/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
+    param('id','No es un ID valido de MongoDB').isMongoId(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -35,7 +35,7 @@ router.post('/sectionPost',errores,sectionPost);
 
 //Borrar usuario por ID
 router.delete('/sectionDelete/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
+    param('id','No es un ID valido de MongoDB').isMongoId(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -43,10 +43,10 @@ router.delete('/sectionDelete/:id',[
 
 //Actualizar  usuario por ID
 router.put('/sectionPut/:id',[
-    check('title','El title no es valido').isLength({min: 2}),
-    check('slug','El slug es obligatorio').isLength({min: 2}),
-    check('description','El description es obligatorio').isLength({min: 2}),   
-    check('points_value','El description es obligatorio').isNumeric(),        
+    body('title','El title no es valido'),
+    body('slug','El slug es obligatorio'),
+    body('description','El description es obligatorio'),   
+    body('points_value','El description es obligatorio').isNumeric(),        
     header('token').isJWT(),
     validarJWT,
     validarCampos

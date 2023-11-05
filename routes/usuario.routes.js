@@ -1,6 +1,6 @@
 const{ Router }= require('express');
 
-const {check, header} = require('express-validator');
+const {check,body,param,header} = require('express-validator');
 const {usuariosGet,
     usuariosGetById,
     usuariosPut,
@@ -13,21 +13,21 @@ const {validarCampos} = require('../middlewares/validar-campos');
 const router = Router();
 
 const errores = [
-    check('id_account_user','El correo no es valido').isMongoId(),
-    check('first_name','El first_name es obligatorio').not().isEmpty().isLength({min: 2}),
-    check('first_lastname','El first_lastname es obligatorio').not().isEmpty().isLength({min: 2}),
+    body('id_account_user','El correo no es valido').isMongoId().notEmpty(),
+    body('first_name','El first_name es obligatorio').notEmpty(),
+    body('first_lastname','El first_lastname es obligatorio').notEmpty(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
 ]
 //Obtener usuario
 router.get('/usuariosGet',[header('token').isJWT(),validarJWT],usuariosGet)
-router.get('/usuariosGetByIdAcc/:id',[check('id','No es un ID valido de MongoDB').isMongoId(),
+router.get('/usuariosGetByIdAcc/:id',[check('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
                                     header('token').isJWT(),validarJWT,validarCampos],usuariosGetByIdAcc)
 
 //account by id
 router.get('/usuariosGetById/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
+    param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -37,7 +37,7 @@ router.post('/usuariosPost',errores,usuariosPost);
 
 //Borrar usuario por ID
 router.delete('/usuariosDelete/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
+    param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
@@ -45,11 +45,9 @@ router.delete('/usuariosDelete/:id',[
 
 //Actualizar  usuario por ID
 router.put('/usuariosPut/:id',[
-    check('id','No es un ID valido de MongoDB').isMongoId(),
-    check('id_account_user','El correo no es valido').isMongoId(),
-    check('first_name','El first_name es obligatorio').isLength({min: 2}),
-    check('first_lastname','El first_lastname es obligatorio').isLength({min: 2}),
-    check('points_user').isNumeric(),
+    param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
+    body('id_account_user','El correo no es valido').isMongoId().notEmpty(),
+    body('points_user').isNumeric(),
     header('token').isJWT(),
     validarJWT,
     validarCampos
