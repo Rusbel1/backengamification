@@ -13,7 +13,6 @@ const {validarCampos} = require('../middlewares/validar-campos');
 const router = Router();
 
 const errores = [
-    body('id_account_user','El correo no es valido').isMongoId().notEmpty(),
     body('first_name','El first_name es obligatorio').notEmpty(),
     body('first_lastname','El first_lastname es obligatorio').notEmpty(),
     header('token').isJWT(),
@@ -33,7 +32,7 @@ router.get('/usuariosGetById/:id',[
     validarCampos
 ],usuariosGetById)
 //Agregar Usuario
-router.post('/usuariosPost',errores,usuariosPost);
+router.post('/usuariosPost',usuariosPost);
 
 //Borrar usuario por ID
 router.delete('/usuariosDelete/:id',[
