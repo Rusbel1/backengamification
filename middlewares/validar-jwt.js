@@ -26,7 +26,7 @@ const validarJWT = async(req, res=response, next)=>{
         const usuarioAuth = await User_account.findById({_id:decode.idUser});
 
         if(!usuarioAuth){
-            res.status(401).json({
+            return res.status(401).json({
                 msg: "Usuario no existe en la DB"
             }); 
         }
