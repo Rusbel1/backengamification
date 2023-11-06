@@ -12,7 +12,7 @@ const login = async(req= request, res= response)=>{
         
         //Verificar si el email existe
         const usuario = await User_account.findOne({mail:mail})
-
+        console.log(usuario)
         //Si no encuentra un usuario con ese correo manda error 400
         if(!usuario){
             return res.status(400).json({
@@ -28,13 +28,12 @@ const login = async(req= request, res= response)=>{
             })
         }
 
-        const {_id} = await Usuario.findOne({id_account_user: usuario._id}) 
+        
         //Generamos JsonWebToken
-        const token = await generarJWT(_id);
+        const token = await generarJWT(usuario._id);
 
             //Retornamos el usuario con su token
             return res.json({
-                _id,
                 token
             })
         

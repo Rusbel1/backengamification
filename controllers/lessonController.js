@@ -101,7 +101,7 @@ const lessonPut = async(req = request, res = response)=>{
             await Lesson.findByIdAndUpdate(id, data);
             console.log(data);
         return res.json({
-            msg: 'Ha section ha sido cambiado con exito',
+            msg: 'La section ha sido cambiado con exito',
         })
 
     } catch (error) {
