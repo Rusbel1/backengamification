@@ -5,7 +5,7 @@ const {Usuario,User_account} = require('../models');
 
 const usuariosPost = async(req = request, res = response)=>{
     try {
-        console.log(req)
+        
       const {mail,
             password,
             first_name,
@@ -23,7 +23,7 @@ const usuariosPost = async(req = request, res = response)=>{
         const id_account_user = new_user_account._id          
 
         //Guardar en DB
-        await new_user.save();
+        await new_user_account.save();
         const dataUsuario ={
             id_account_user,
             first_name,
@@ -32,7 +32,7 @@ const usuariosPost = async(req = request, res = response)=>{
             second_lastname,
         }
         const new_user = new Usuario(dataUsuario); 
-
+        await new_user.save()
         return res.json({
             msg:'Uusario creado con exito',
             new_user_account,
