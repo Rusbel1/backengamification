@@ -48,7 +48,6 @@ router.delete('/usuariosDelete/:id',[
 //Actualizar  usuario por ID
 router.put('/usuariosPut/:id',[
     param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
-    body('id_account_user','El correo no es valido').isMongoId().notEmpty(),
     body('points_user').isNumeric(),
     header('token').isJWT(),
     validarJWT,

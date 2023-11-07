@@ -164,6 +164,8 @@ const usuariosGetByIdAcc = async(req = request, res = response)=>{
     }
  }
 
+ 
+
  const usuariosDelete = async(req = request, res = response)=>{
 try {
     
