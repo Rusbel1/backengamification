@@ -6,7 +6,8 @@ const {usuariosGet,
     usuariosPut,
     usuariosDelete,
     usuariosGetByIdAcc,
-    usuariosPost } = require('../controllers/usuarioController');
+    usuariosPost,
+    infoUsuariosByToken } = require('../controllers/usuarioController');
 const {validarJWT} = require('../middlewares/validar-jwt');
 const {validarCampos} = require('../middlewares/validar-campos');
 
@@ -24,6 +25,8 @@ router.get('/usuariosGet',[header('token').isJWT(),validarJWT],usuariosGet)
 router.get('/usuariosGetByIdAcc/:id',[check('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
                                     header('token').isJWT(),validarJWT,validarCampos],usuariosGetByIdAcc)
 
+
+router.get('/usuariosByToken',[header('token').isJWT(),validarJWT,validarCampos],infoUsuariosByToken)
 //account by id
 router.get('/usuariosGetById/:id',[
     param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),

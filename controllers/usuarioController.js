@@ -1,8 +1,25 @@
 const brcryptjs = require('bcryptjs');
 const{response,request}= require('express');
 const {Usuario,User_account} = require('../models');
+const jwt = require('jsonwebtoken');
 
 
+const infoUsuariosByToken = async(req = request, res = response)=>{
+    const token = await req.header('token')
+    console.log(token);
+    const decode = jwt.decode(token)
+    console.log(decode);
+    const usuario = await Usuario.find({id_account_user:decode.idUser}).populate('id_account_user')
+
+    if(!usuario){
+        return res.status(400).json({
+            msg:'no se encuentra informacion del usuario'
+        })
+    }
+
+    return res.json(usuario)
+
+}
 
 const usuariosPost = async(req = request, res = response)=>{
     try {
@@ -177,5 +194,6 @@ module.exports = {
     usuariosPut,
     usuariosDelete,
     usuariosGetByIdAcc,
+    infoUsuariosByToken,
     usuariosPost
 }
