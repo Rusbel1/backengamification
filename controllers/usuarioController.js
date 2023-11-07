@@ -1,3 +1,4 @@
+const brcryptjs = require('bcryptjs');
 const{response,request}= require('express');
 const {Usuario,User_account} = require('../models');
 
@@ -14,16 +15,27 @@ const usuariosPost = async(req = request, res = response)=>{
             second_lastname,
             } = req.body;
 
+        
+        const mailExists = await User_account.findOne({mail:mail})
+        console.log(mailExists)
+         if(mailExists){
+             return res.status(400).json({
+                 msg:'Ese mail ya existe'
+             })
+         }
         const dataAcc_user ={
             mail,
             password
         }
             
         const new_user_account = new User_account(dataAcc_user); 
-        const id_account_user = new_user_account._id          
-
+        
+        const salt =  brcryptjs.genSaltSync();
+        new_user_account.password = brcryptjs.hashSync(password,salt);
+        
         //Guardar en DB
         await new_user_account.save();
+        const id_account_user = new_user_account._id          
         const dataUsuario ={
             id_account_user,
             first_name,

@@ -39,7 +39,7 @@ router.get('/lessonGetByIdSection/:idSection',[
     validarCampos
 ],lessonGetByIdSection)
 
-//Agregar Usuario
+
 router.post('/lessonPost',errores,lessonPost);
 
 //Borrar usuario por ID

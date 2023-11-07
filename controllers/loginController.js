@@ -8,7 +8,7 @@ const login = async(req= request, res= response)=>{
     try {
         //Solicita informacion del body y desestructura correo y password
         const {mail,password} = req.body;
-        
+        console.log(typeof password)
         
         //Verificar si el email existe
         const usuario = await User_account.findOne({mail:mail})
