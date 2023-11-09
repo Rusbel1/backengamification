@@ -14,6 +14,7 @@ const router = Router();
 const errores = [
     body('title','El title no es valido').notEmpty(),
     body('slug','El slug es obligatorio').notEmpty(),
+    body('level','El slug es obligatorio').notEmpty(),
     body('description','El description es obligatorio').notEmpty(),   
     body('points_value','El description es obligatorio').isNumeric(),        
     header('token').isJWT(),

@@ -14,6 +14,10 @@ const sectionSchema = Schema({
         type: String,
         require: [true,'La description es obligatorio'],
     },
+    level:{
+        type: String,
+        require: [true,'La level es obligatorio'],
+    },
     points_value:{
         type:Number,
         require: [true,'El points_value es obligatorio'],

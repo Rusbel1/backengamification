@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const { Lesson } = require('../models');
+const { Lesson, Lesson_content, Section } = require('../models');
 
 const lessonPost = async (req = request, res = response) => {
     try {
@@ -75,6 +75,45 @@ const lessonGetByIdSection = async (req = request, res = response) => {
     }
 }
 
+const lessonAndLessonContentGetByIdSection = async (req = request, res = response) => {
+    try {
+        const { idSection } = req.params
+        const section = await Section.findById(idSection)
+        const lesson = await Lesson.find({id_section: idSection });
+        let lessonContent = [];
+        await Promise.all(lesson.map(async (e,index) => {
+            let content  = await Lesson_content.find({id_lesson:e._id});
+            lessonContent.push(content);
+        }));
+        console.log('lesson');
+      console.log(lesson);
+      console.log('lessonContent');
+      console.log(lessonContent);
+
+       const lessonContentResult = lesson.map((lesson,index)=>{
+           let content = lessonContent[index];
+           console.log(lesson);
+           console.log(content);
+        return {lesson:lesson,lessonContent:content}
+       })
+
+       console.log('final result');
+       console.log(lessonContentResult);
+
+
+        if (!lesson) {
+            return res.json({
+                msg: `No se encuentra la lesson id:${id} en la db`
+            })
+        }
+        return res.json({section:section,lessonContentResult})
+
+    } catch (error) {
+        console.log(error);
+        return res.status(401);
+    }
+}
+
 const lessonPut = async (req = request, res = response) => {
     try {
 
@@ -140,5 +179,6 @@ module.exports = {
     lessonPut,
     lessonDelete,
     lessonGetByIdSection,
+    lessonAndLessonContentGetByIdSection,
     lessonPost
 }

@@ -6,7 +6,8 @@ const {lessonGet,
     lessonPut,
     lessonDelete,
     lessonGetByIdSection,
-    lessonPost } = require('../controllers/lessonController');
+    lessonPost,
+    lessonAndLessonContentGetByIdSection } = require('../controllers/lessonController');
 const {validarJWT} = require('../middlewares/validar-jwt');
 const {validarCampos} = require('../middlewares/validar-campos');
 
@@ -38,6 +39,13 @@ router.get('/lessonGetByIdSection/:idSection',[
     validarJWT,
     validarCampos
 ],lessonGetByIdSection)
+
+router.get('/threeTablesByIdSection/:idSection',[
+    param('idSection','No es un ID valido de MongoDB').isMongoId(),
+    header('token').isJWT(),
+    validarJWT,
+    validarCampos
+],lessonAndLessonContentGetByIdSection)
 
 
 router.post('/lessonPost',errores,lessonPost);

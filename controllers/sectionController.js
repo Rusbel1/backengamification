@@ -7,6 +7,7 @@ const sectionPost = async(req = request, res = response)=>{
     try {
         
       const {title,
+        level,
             slug,
             description,
             points_value
@@ -74,6 +75,7 @@ const sectionPut = async(req = request, res = response)=>{
         }
         const {title,
             slug,
+            level,
             description,
             points_value
             } = req.body;
