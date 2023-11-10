@@ -27,6 +27,7 @@ router.get('/usuariosGetByIdAcc/:id',[check('id','No es un ID valido de MongoDB'
 
 
 router.get('/usuariosByToken',[header('token').isJWT(),validarJWT,validarCampos],infoUsuariosByToken)
+
 //account by id
 router.get('/usuariosGetById/:id',[
     param('id','No es un ID valido de MongoDB').isMongoId().notEmpty(),
