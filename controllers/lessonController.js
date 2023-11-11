@@ -78,27 +78,29 @@ const lessonGetByIdSection = async (req = request, res = response) => {
 const lessonAndLessonContentGetByIdSection = async (req = request, res = response) => {
     try {
         const { idSection } = req.params
+
         const section = await Section.findById(idSection)
+
         const lesson = await Lesson.find({id_section: idSection });
+
         let lessonContent = [];
+
         await Promise.all(lesson.map(async (e,index) => {
-            let content  = await Lesson_content.find({id_lesson:e._id});
+            let content  = await Lesson_content.find({id_lesson:e._id}); 
             lessonContent.push(content);
         }));
-        console.log('lesson');
-      console.log(lesson);
-      console.log('lessonContent');
-      console.log(lessonContent);
+        let lessons = []
+        await Promise.all(lessonContent.map(async (e,index) => {
+            let lessonById = await Lesson.findById(e[0].id_lesson);
+            lessons.unshift(lessonById);
+            lessonContent[index].unshift({lesson:lessonById})
+            
+        }));
+        console.log('lessons');
+        console.log(lessons);
+        console.log('lessonContent');
+        console.log(lessonContent);
 
-       const lessonContentResult = lesson.map((lesson,index)=>{
-           let content = lessonContent[index];
-           console.log(lesson);
-           console.log(content);
-        return {lesson:lesson,lessonContent:content}
-       })
-
-       console.log('final result');
-       console.log(lessonContentResult);
 
 
         if (!lesson) {
@@ -106,7 +108,7 @@ const lessonAndLessonContentGetByIdSection = async (req = request, res = respons
                 msg: `No se encuentra la lesson id:${id} en la db`
             })
         }
-        return res.json({section:section,lessonContentResult})
+        return res.json({section:section,lessonContent})
 
     } catch (error) {
         console.log(error);
