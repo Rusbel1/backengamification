@@ -96,10 +96,9 @@ const lessonAndLessonContentGetByIdSection = async (req = request, res = respons
             lessonContent[index].unshift({lesson:lessonById})
             
         }));
-        console.log('lessons');
-        console.log(lessons);
+       
         console.log('lessonContent');
-        console.log(lessonContent);
+        console.log(lessonContent.sort());
 
 
 
@@ -108,7 +107,7 @@ const lessonAndLessonContentGetByIdSection = async (req = request, res = respons
                 msg: `No se encuentra la lesson id:${id} en la db`
             })
         }
-        return res.json({section:section,lessonContent})
+        return res.json({section:section,lessonContent:lessonContent})
 
     } catch (error) {
         console.log(error);
