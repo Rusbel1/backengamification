@@ -46,6 +46,7 @@ router.delete('/sectionDelete/:id',[
 router.put('/sectionPut/:id',[
     body('title','El title no es valido'),
     body('slug','El slug es obligatorio'),
+    body('level','El level es obligatorio'),
     body('description','El description es obligatorio'),   
     body('points_value','El description es obligatorio').isNumeric(),        
     header('token').isJWT(),
