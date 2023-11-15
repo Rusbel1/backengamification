@@ -91,6 +91,7 @@ const lessonAndLessonContentGetByIdSection = async (
     let lessons = [];
     await Promise.all(
       lessonContent.map(async (e, index) => {
+        console.log(e[0]);
         let lessonById = await Lesson.findById(e[0].id_lesson);
         lessons.unshift(lessonById);
         lessonContent[index].unshift({ lesson: lessonById });
