@@ -21,7 +21,11 @@ const sectionSchema = Schema({
     points_value:{
         type:Number,
         require: [true,'El points_value es obligatorio'],
-    }
+    },
+    reward_points:{
+        type:Number,
+        require: [true,'El reward_points es obligatorio'],
+    },
     
 });
 

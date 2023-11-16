@@ -106,10 +106,17 @@ const lessonAndLessonContentGetByIdSection = async (
         msg: `No se encuentra la lesson id:${id} en la db`,
       });
     }
-    
-    
-   /*  return res.json({ section: section, lessonContent: lessonContent }); */
-    return res.json({ section: section, lessonContentResult: [lessonContent.map((lesson,index)=>({lesson:lesson[0].lesson,content:lesson.slice(1)}))]});
+
+    /*  return res.json({ section: section, lessonContent: lessonContent }); */
+    return res.json({
+      section: section,
+      lessonContentResult: [
+        lessonContent.map((lesson, index) => ({
+          lesson: lesson[0].lesson,
+          content: lesson.slice(1),
+        })),
+      ],
+    });
   } catch (error) {
     console.log(error);
     return res.status(401);

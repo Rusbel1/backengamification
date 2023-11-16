@@ -10,14 +10,16 @@ const sectionPost = async(req = request, res = response)=>{
         level,
             slug,
             description,
-            points_value
+            points_value,
+            reward_points
             } = req.body;
 
         const data ={title,
             level,
             slug,
             description,
-            points_value
+            points_value,
+            reward_points
             }
             
         const section = new Section(data);           
@@ -78,14 +80,16 @@ const sectionPut = async(req = request, res = response)=>{
             slug,
             level,
             description,
-            points_value
+            points_value,
+            reward_points
             } = req.body;
 
         const data ={title,
             slug,
             level,
             description,
-            points_value
+            points_value,
+            reward_points
             }
         
             await Section.findByIdAndUpdate(id, data);
