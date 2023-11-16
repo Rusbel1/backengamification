@@ -23,7 +23,7 @@ const usuarioSchema = Schema({
     }, 
     points_user:{
         type: Number,
-        default:0
+        default:100
     }
     
 });
