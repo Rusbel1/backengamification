@@ -18,7 +18,7 @@ const usuarioSchema = Schema({
         type: String,
         required: [true, 'El primer apellido es obligatorio'],
     },
-    apellido2: {
+    second_lastname: {
         type: String,
     }, 
     points_user:{
